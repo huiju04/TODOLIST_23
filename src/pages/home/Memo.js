@@ -9,7 +9,7 @@ const Input = styled.input``;
 export const Memo = () => {
   return (
     <Wrap>
-      <Title></Title>
+      <Title>TO DO List</Title>
 
       <Input />
     </Wrap>

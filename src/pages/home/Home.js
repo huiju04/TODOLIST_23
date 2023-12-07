@@ -1,4 +1,4 @@
-import { List } from "./List";
+import { List } from "../home/List";
 
 export const Home = () => {
   return (

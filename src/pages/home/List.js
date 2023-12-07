@@ -1,5 +1,10 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const Wrap = styled.div`
   width: 100%;
@@ -16,7 +21,7 @@ const Title = styled.h3`
   color: #002257;
 `;
 
-const ListBox = styled.div`
+const Form = styled.div`
   input {
     all: unset;
     box-sizing: border-box;
@@ -30,8 +35,6 @@ const ListBox = styled.div`
   }
 `;
 
-const CheckBox = styled.div``;
-
 const Check = styled.ul`
   margin: 50px auto;
   width: 560px;
@@ -39,10 +42,19 @@ const Check = styled.ul`
   justify-content: space-between;
 
   .button {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+  }
+
+  .button:nth-child(1) {
+    background-color: white;
+    border: 1.5px solid #002257;
+    color: #002257;
   }
 `;
+
+const ButtonWrap = styled.div``;
 
 const Button = styled.button`
   all: unset;
@@ -57,20 +69,21 @@ const Button = styled.button`
 
 export const List = () => {
   const [listData, setListData] = useState([
-    {
-      id: 0,
-      title: "오늘은 투두리스트를 만들었어요",
-    },
+    // {
+    //   id: 0,
+    //   title: "오늘은 투두리스트를 만들었어요",
+    // },
   ]);
 
   const [input, setInput] = useState({
     list: "",
   });
 
-  let Ref = useRef(1);
+  let Ref = useRef(0);
   const { list } = input;
 
   const onChange = (e) => {
+    // console.log(e);
     const title = e.target.name;
     setInput({
       ...input,
@@ -94,27 +107,47 @@ export const List = () => {
     <Wrap>
       <Title>To Do List</Title>
 
-      <ListBox>
+      <Form>
         <input
           onChange={onChange}
           type="text"
           placeholder="할 일을 입력해하세요."
           name="list"
         />
-        <Button onClick={onClick}>추가</Button>
-      </ListBox>
+        <Button onClick={onClick}>
+          <FontAwesomeIcon icon={faPlus} />
+        </Button>
+      </Form>
 
-      <CheckBox>
+      <>
         {listData.map(function (a, i) {
           return (
             <Check key={i}>
               <input type="checkbox" />
               <li>{listData[i].title}</li>
-              <Button className="button">삭제</Button>
+
+              <ButtonWrap>
+                <Link to="/memo">
+                  <Button className="button">
+                    <FontAwesomeIcon icon={faSortDown} />
+                  </Button>
+                </Link>
+
+                <Button
+                  className="button"
+                  onClick={() => {
+                    let copy = [...listData];
+                    copy.splice(i, 1);
+                    setListData(copy);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </Button>
+              </ButtonWrap>
             </Check>
           );
         })}
-      </CheckBox>
+      </>
     </Wrap>
   );
 };
