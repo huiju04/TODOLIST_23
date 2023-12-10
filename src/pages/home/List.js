@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -9,8 +8,14 @@ import { Link } from "react-router-dom";
 const Wrap = styled.div`
   width: 100%;
   height: 100vh;
+`;
+
+const InWrap = styled.div`
+  max-width: 600px;
+  width: 100%;
+  height: 100vh;
   margin: 0 auto;
-  padding: 50px 150px;
+  padding: 50px 0;
 `;
 
 const Title = styled.h3`
@@ -33,6 +38,11 @@ const Form = styled.div`
     margin-right: 10px;
     font-size: 18px;
   }
+
+  Button:hover {
+    background-color: #677da1;
+    transition: 0.5s;
+  }
 `;
 
 const Check = styled.ul`
@@ -44,13 +54,15 @@ const Check = styled.ul`
   .button {
     width: 32px;
     height: 32px;
-    margin-bottom: 5px;
   }
 
-  .button:nth-child(1) {
-    background-color: white;
-    border: 1.5px solid #002257;
-    color: #002257;
+  .button:hover {
+    background-color: #677da1;
+    transition: 0.5s;
+  }
+
+  li:hover {
+    text-decoration: underline;
   }
 `;
 
@@ -69,10 +81,10 @@ const Button = styled.button`
 
 export const List = () => {
   const [listData, setListData] = useState([
-    // {
-    //   id: 0,
-    //   title: "오늘은 투두리스트를 만들었어요",
-    // },
+    {
+      id: 0,
+      title: "오늘은 투두리스트를 만들었어요",
+    },
   ]);
 
   const [input, setInput] = useState({
@@ -105,49 +117,47 @@ export const List = () => {
 
   return (
     <Wrap>
-      <Title>To Do List</Title>
+      <InWrap>
+        <Title>To Do List</Title>
 
-      <Form>
-        <input
-          onChange={onChange}
-          type="text"
-          placeholder="할 일을 입력해하세요."
-          name="list"
-        />
-        <Button onClick={onClick}>
-          <FontAwesomeIcon icon={faPlus} />
-        </Button>
-      </Form>
+        <Form>
+          <input
+            onChange={onChange}
+            type="text"
+            placeholder="할 일을 입력해하세요."
+            name="list"
+          />
+          <Button onClick={onClick} className="button">
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
+        </Form>
 
-      <>
-        {listData.map(function (a, i) {
-          return (
-            <Check key={i}>
-              <input type="checkbox" />
-              <li>{listData[i].title}</li>
-
-              <ButtonWrap>
+        <>
+          {listData.map(function (a, i) {
+            return (
+              <Check key={i}>
+                <input type="checkbox" />
                 <Link to="/memo">
-                  <Button className="button">
-                    <FontAwesomeIcon icon={faSortDown} />
-                  </Button>
+                  <li>{listData[i].title}</li>
                 </Link>
 
-                <Button
-                  className="button"
-                  onClick={() => {
-                    let copy = [...listData];
-                    copy.splice(i, 1);
-                    setListData(copy);
-                  }}
-                >
-                  <FontAwesomeIcon icon={faXmark} />
-                </Button>
-              </ButtonWrap>
-            </Check>
-          );
-        })}
-      </>
+                <ButtonWrap>
+                  <Button
+                    className="button"
+                    onClick={() => {
+                      let copy = [...listData];
+                      copy.splice(i, 1);
+                      setListData(copy);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faXmark} />
+                  </Button>
+                </ButtonWrap>
+              </Check>
+            );
+          })}
+        </>
+      </InWrap>
     </Wrap>
   );
 };

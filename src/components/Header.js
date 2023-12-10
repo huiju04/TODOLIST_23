@@ -16,14 +16,10 @@ const Headers = styled.header`
   }
 `;
 
-const Logo = styled.div`
-  width: 200px;
-  display: flex;
-  justify-content: space-between;
-`;
+const Logo = styled.div``;
 
 const Menu = styled.div`
-  width: 150px;
+  width: 250px;
   display: flex;
   justify-content: space-between;
 `;
@@ -33,11 +29,10 @@ export const Header = () => {
     <Headers>
       <Logo>
         <Link to="/">로고</Link>
-        <Link to="/">홈</Link>
-        <Link to="/memo">메모</Link>
       </Logo>
 
       <Menu>
+        <Link to="/">홈</Link>
         <Link to="/Login">로그인</Link>
         <Link to="/SignUp">회원가입</Link>
       </Menu>
